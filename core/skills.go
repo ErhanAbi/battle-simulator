@@ -13,7 +13,7 @@ type CriticalStrike struct {
 
 // GetDescription returns the long description of the skill
 func (cs *CriticalStrike) GetDescription() string {
-	return fmt.Sprintf(`Critical Strike(%f.2%% chance for 2x; %f.2%% chance for 3x)`, cs.DoubleStrikeChance*100, cs.TripleStrikeChance*100)
+	return fmt.Sprintf(`Critical Strike(%.2f%% chance for 2x; %.2f%% chance for 3x)`, cs.DoubleStrikeChance*100, cs.TripleStrikeChance*100)
 }
 
 // GetBattleDescription returns the short (in battle) description of the triggered skill
@@ -26,11 +26,11 @@ func (cs *CriticalStrike) GetModifier(player *Player) AttackModifier {
 	modifier := func(attack *Attack) *Attack {
 		if rand.Float64() <= cs.DoubleStrikeChance {
 			multipler := 2
-			hits := append(attack.Hits, Hit{PotentialDamage: player.Strength})
+			hits := append(attack.Hits, NewHit(player.Strength))
 
 			if rand.Float64() <= cs.TripleStrikeChance {
 				multipler = 3
-				hits = append(hits, Hit{PotentialDamage: player.Strength})
+				hits = append(hits, NewHit(player.Strength))
 			}
 
 			attack.UsedOffensiveSkills = append(attack.UsedOffensiveSkills, cs.GetBattleDescription(multipler))
@@ -52,12 +52,12 @@ type Resilience struct {
 
 // GetDescription returns the long description of this skill
 func (r *Resilience) GetDescription() string {
-	return fmt.Sprintf(`Resilience (%f.2%% chance to block %f.2%% damage)`, r.Chance, r.DamageReduction)
+	return fmt.Sprintf(`Resilience (%.2f%% chance to block %.2f%% damage)`, r.Chance*100, r.DamageReduction*100)
 }
 
 // GetBattleDescription returns the short (battle) description of the skill
 func (r *Resilience) GetBattleDescription() string {
-	return fmt.Sprintf(`Resilience(blocked %f.2%% damage)`, r.DamageReduction)
+	return fmt.Sprintf(`Resilience(blocked %.2f%% damage)`, r.DamageReduction*100)
 }
 
 // GetModifier converts the skill to a (chainable) attack modifier
@@ -91,7 +91,7 @@ type Luck struct {
 
 // GetDescription returns the skill's long description
 func (l *Luck) GetDescription() string {
-	return fmt.Sprintf(`Luck (%f.2%% chance to evade hits)`, l.Chance)
+	return fmt.Sprintf(`Luck (%.2f%% chance to evade hits)`, l.Chance)
 }
 
 // GetBattleDescription returns the short description of the skill

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math/rand"
 	"time"
 
@@ -12,7 +11,6 @@ func main() {
 	t := time.Now()
 	rand.Seed(t.UnixNano())
 
-	// p1 := NewPlayer("Orange", PlayerStats{})
 	p1 := core.NewPlayer("Orange", core.PlayerStats{
 		Health:   core.Range(70, 100),
 		Strength: core.Range(70, 80),
@@ -20,8 +18,8 @@ func main() {
 		Speed:    core.Range(40, 50),
 		Luck:     core.Range(0.1, 0.3),
 	}, core.PlayerSkills{
-		OffensiveSkills: []core.Skill{&core.CriticalStrike{DoubleStrikeChance: 0.6, TripleStrikeChance: 0.8}},
-		DefensiveSkills: []core.Skill{&core.Resilience{Chance: 0.6, DamageReduction: 0.5}},
+		OffensiveSkills: []core.Skill{&core.CriticalStrike{DoubleStrikeChance: 0.1, TripleStrikeChance: 0.01}},
+		DefensiveSkills: []core.Skill{&core.Resilience{Chance: 0.2, DamageReduction: 0.5}},
 	})
 
 	p2 := core.NewPlayer("Bluji The Weak", core.PlayerStats{
@@ -35,13 +33,13 @@ func main() {
 		DefensiveSkills: []core.Skill{},
 	})
 
-	for i := 0; i < 20; i++ {
-		attack := p2.GenerateAttack()
-		p1.DefendAttack(attack)
-
-		fmt.Println(attack)
-		fmt.Println(p1)
-		fmt.Println(p2)
+	dm := &core.DuelMaster{
+		PlayerOne:   p1,
+		PlayerTwo:   p2,
+		Rounds:      20,
+		RoundsDelay: time.Second,
+		AttackDelay: 500 * time.Millisecond,
 	}
 
+	dm.StartDuel(&core.LogsCommentator{})
 }

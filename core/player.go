@@ -48,7 +48,7 @@ func NewPlayer(name string, stats PlayerStats, skills PlayerSkills) *Player {
 	}
 
 	p.offensiveAttackModifier = pipeSkills(p, p.OffensiveSkills)
-	p.defensiveAttackModifier = pipeSkills(p, append(p.DefensiveSkills, &Luck{Chance: p.Luck}))
+	p.defensiveAttackModifier = pipeSkills(p, append([]Skill{&Luck{Chance: p.Luck}}, p.DefensiveSkills...))
 
 	return p
 }
