@@ -74,7 +74,7 @@ func (p *Player) DefendAttack(attack *Attack) {
 	attackAfterDefense := p.defensiveAttackModifier(attack)
 
 	for _, hit := range attackAfterDefense.Hits {
-		if p.Health <= 0 {
+		if p.IsDead() {
 			break
 		}
 
