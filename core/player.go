@@ -2,7 +2,6 @@ package core
 
 import (
 	"math"
-	"math/rand"
 )
 
 // PlayerStats represents the stats of a player
@@ -12,14 +11,6 @@ type PlayerStats struct {
 	Defence  float64
 	Speed    float64
 	Luck     float64
-}
-
-// Range returns a random number between the given range
-func Range(min, max float64) float64 {
-	r := rand.Float64()
-	v := (max-min)*r + min
-	return v
-
 }
 
 // PlayerSkills represents the player's skills
