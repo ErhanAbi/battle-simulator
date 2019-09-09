@@ -13,6 +13,17 @@ type Commentator interface {
 	EndDuelTie(round int, player1, player2 *Player)
 }
 
+// dummy implementation of the Commenter interface
+type dummyCommentator struct {
+}
+
+func (dc *dummyCommentator) Start()                                                   {}
+func (dc *dummyCommentator) PresentPlayers(first, second *Player)                     {}
+func (dc *dummyCommentator) PresentRound(int)                                         {}
+func (dc *dummyCommentator) PresentAttack(attack *Attack, attacker, defender *Player) {}
+func (dc *dummyCommentator) EndDuelKnockout(int, *Player, *Player)                    {}
+func (dc *dummyCommentator) EndDuelTie(int, *Player, *Player)                         {}
+
 // DuelMaster contains logic for the duel
 type DuelMaster struct {
 	Rounds      int
@@ -42,7 +53,12 @@ func (dm *DuelMaster) getPlayersInOrder() (*Player, *Player) {
 }
 
 // StartDuel contains the logic for the duel between 2 combatants
-func (dm *DuelMaster) StartDuel(commentator Commentator) {
+func (dm *DuelMaster) StartDuel(c ...Commentator) {
+
+	var commentator Commentator = &dummyCommentator{}
+	if len(c) > 0 {
+		commentator = c[0]
+	}
 
 	player1, player2 := dm.getPlayersInOrder()
 

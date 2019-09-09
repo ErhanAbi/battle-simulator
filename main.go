@@ -11,7 +11,7 @@ func main() {
 	t := time.Now()
 	rand.Seed(t.UnixNano())
 
-	p1 := core.NewPlayer("Orange", core.PlayerStats{
+	p1 := core.NewPlayer("Na`arun The Wicked", core.PlayerStats{
 		Health:   core.Range(70, 100),
 		Strength: core.Range(70, 80),
 		Defence:  core.Range(45, 55),
@@ -22,7 +22,7 @@ func main() {
 		DefensiveSkills: []core.Skill{&core.Resilience{Chance: 0.2, DamageReduction: 0.5}},
 	})
 
-	p2 := core.NewPlayer("Bluji The Weak", core.PlayerStats{
+	p2 := core.NewPlayer("Peanut", core.PlayerStats{
 		Health:   core.Range(60, 90),
 		Strength: core.Range(60, 90),
 		Defence:  core.Range(40, 60),
@@ -34,11 +34,12 @@ func main() {
 	})
 
 	dm := &core.DuelMaster{
-		PlayerOne:   p1,
-		PlayerTwo:   p2,
 		Rounds:      20,
 		RoundsDelay: time.Second,
 		AttackDelay: 500 * time.Millisecond,
+
+		PlayerOne: p1,
+		PlayerTwo: p2,
 	}
 
 	dm.StartDuel(&core.LogsCommentator{})

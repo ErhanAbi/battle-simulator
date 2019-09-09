@@ -52,17 +52,6 @@ func TestDuelMaster_getPlayersInOrder(t *testing.T) {
 	}
 }
 
-// dummy implementation of the Commenter interface
-type dummyCommentator struct {
-}
-
-func (dc *dummyCommentator) Start()                                                   {}
-func (dc *dummyCommentator) PresentPlayers(first, second *Player)                     {}
-func (dc *dummyCommentator) PresentRound(int)                                         {}
-func (dc *dummyCommentator) PresentAttack(attack *Attack, attacker, defender *Player) {}
-func (dc *dummyCommentator) EndDuelKnockout(int, *Player, *Player)                    {}
-func (dc *dummyCommentator) EndDuelTie(int, *Player, *Player)                         {}
-
 func TestDuelMaster_StartDuel(t *testing.T) {
 	type args struct {
 		commentator Commentator
